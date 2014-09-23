@@ -63,7 +63,7 @@ class Wallet
                 balances = name_bal_pair[1]
                 angular.forEach balances, (asset_id_amt_pair) =>
                     asset_id = asset_id_amt_pair[0]
-                    asset_record = @blockchain.asset_records[asset_id]
+                    asset_record = @blockchain.asset_records[0]
                     symbol = asset_record.symbol
                     amount = asset_id_amt_pair[1]
                     @balances[name] = @balances[name] || {}
@@ -357,6 +357,10 @@ class Wallet
     get_block: (block_num)->
         @rpc.request('blockchain_get_block', [block_num]).then (response) ->
           response.result
+
+    dice: (account_name, amount, payouts)->
+        @rpc.request('wallet_dice', [account_name, amount, payouts]).then (response) ->
+            response.result
 
     wallet_lock: ->
         @rpc.request('wallet_lock').then (response) ->
