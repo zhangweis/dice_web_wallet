@@ -61,7 +61,7 @@ class Wallet
             angular.forEach results.account_balances, (name_bal_pair) =>
                 name = name_bal_pair[0]
                 balances = name_bal_pair[1]
-                angular.forEach balances, (asset_id_amt_pair) =>
+                angular.forEach balances[0], (asset_id_amt_pair) =>
                     asset_id = asset_id_amt_pair[0]
                     asset_record = @blockchain.asset_records[0]
                     symbol = asset_record.symbol

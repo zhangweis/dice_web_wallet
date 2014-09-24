@@ -58,7 +58,7 @@ class Info
         @interval (=>
             if !@is_refreshing
                 @refresh_info()
-        ), 2500
+        ), 7500
 
     constructor: (@q, @log, @location, @growl, @common_api, @blockchain, @blockchain_api, @wallet, @interval, @utils) ->
 

@@ -61,6 +61,7 @@ module.exports = function(lineman) {
       ],
       app: [
         //TODO: make main.css compatible with ng-grid
+	"app/css/dice.css",
         "app/css/main.css",
         "app/css/forms.css",
         "app/css/layout.css",

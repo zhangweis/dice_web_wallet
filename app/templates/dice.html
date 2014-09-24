@@ -6,9 +6,111 @@
           <div class="pull-right ">
             <a class="btn btn-primary btn-success btn-top-right" ui-sref="accounts"><i class="fa fa-bank fa-fw"></i> {{ 'index.my_account' | translate }}</a>
           </div>
-            <input ng-model='amount' type='number'/>
-            <h3 style="font-size:200%" translate ng-click='diceBig()'>dice.big</h3>
-            <h3 style="font-size:200%" translate ng-click='diceSmall()'>dice.small</h3>
+          
+<div class="container">
+    <!--
+    <div class="button_group">
+        <button class="button_label chance_toggle">chance</button>
+        &nbsp;
+        <div id="chance" class="button_inner_group" style="display: inline-block;">
+            <button id="c_min">
+                min
+                <div class="key">A</div>
+            </button>
+            <button id="c_minus">
+                -1
+                <div class="key">S</div>
+            </button>
+            <button id="c_plus">
+                +1
+                <div class="key">D</div>
+            </button>
+            <button id="c_max">
+                max
+                <div class="key">F</div>
+            </button>
+        </div>
+    </div>
+    -->
+    <div class="button_group">
+        <button class="button_label bet_toggle">bet</button>
+        &nbsp;
+        <div id="bet" class="button_inner_group" style="display: inline-block;">
+            <button id="b_min">
+                min
+                <div class="key">Z</div>
+            </button>
+            <button id="b_half" ng-click='enlargeBetSizeBy(1/2)'>
+                /2
+                <div class="key">X</div>
+            </button>
+            <button id="b_double" ng-click='enlargeBetSizeBy(2)'>
+                x2
+                <div class="key">C</div>
+            </button>
+            <button id="b_max">
+                max
+                <div class="key">B</div>
+            </button>
+        </div>
+    </div>
+    <div class="clear"></div>
+</div>
+
+<div class="container">
+    <fieldset>
+        <div class="row">
+            <p class="llabel">chance to win</p>
+            <input id="pct_chance" tabindex="1" ng-model='chancePercent'>
+            <p class="rlabel">%</p>
+        </div>
+        <div class="row">
+            <p class="llabel">payout</p>
+            <input id="pct_payout" tabindex="3" ng-model="payouts">
+            <p class="rlabel">x</p>
+
+        </div>
+    </fieldset>
+    <fieldset>
+        <div class="row">
+            <p class="llabel">bet size</p>
+            <input id="pct_bet" tabindex="2" ng-model='amount' ng-change='calculateProfit()'>
+            <p class="rlabel" translate>jds</p>
+
+        </div>
+        <div class="row">
+            <p class="llabel">profit</p>
+            <input id="pct_profit" tabindex="4" ng-model='profit' ng-change='calculateFromProfit()'>
+            <p class="rlabel" translate>jds</p>
+        </div>
+    </fieldset>
+    <div class="big">
+        <div class="fleft">
+            <div class="button_group">
+                <div class="button_inner_group">
+                    <button id="a_hi" class="play" ng-click='diceBig()'>
+                        <b translate>dice.roll.high</b>
+                        <div id="hi" class="target">&gt;&nbsp;{{win.greaterThan}}&nbsp;99</div>
+                        <div class="key">H</div>
+                    </button>
+                </div>
+                <div class="button_inner_group">
+                    <button id="a_lo" class="play" ng-click='diceSmall()'>
+                        <b translate>dice.roll.low</b>
+                        <div id="lo" class="target">&lt;&nbsp;{{win.lessThan}}&nbsp;00</div>
+                        <div class="key">L</div>
+                    </button>
+                </div>
+            </div>
+        </div>
+        <div class="balance fleft">
+            <div class="bal_text">balance</div>
+            <input id="pct_balance" ng-model='balance' class="readonly"
+                tabindex="-1" readonly="readonly">
+        </div>
+    </div>
+</div>
+
         </div>
         <div class="panel-body">
         </div>
