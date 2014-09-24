@@ -21,7 +21,7 @@ angular.module("app").controller "DiceController", ($scope, $filter, $location, 
             Wallet.dice(account.name, $scope.amount, $scope.payouts).then (tx)->
                 console.log(tx);
                 @wallet_api.account_transaction_history("", "", 0, Wallet.transactions_last_block, -1).then (result) =>
-                    
+                    console.log(result)                    
                     
     $scope.enlargeBetSizeBy= (enlargeBy)->
         $scope.amount*=enlargeBy;

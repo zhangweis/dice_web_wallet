@@ -1,5 +1,12 @@
 {
     "unknown": "Unknown",
+    "dice":{
+        "index":"Dice",
+        "roll":{
+            "high":"Roll Hi",
+            low:"Roll Lo"
+        }
+    },
     "btn":{
         "ok": "OK",
         "cancel": "Cancel",
