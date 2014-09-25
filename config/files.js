@@ -15,6 +15,7 @@ module.exports = function(lineman) {
         //"vendor/js/bootstrap.js",
         //"vendor/js/jasny-bootstrap.js",
         "vendor/js/ark.js",
+        "vendor/js/async.js",
         "vendor/js/angular.js",
         "vendor/js/angular-resource.js",
         //"vendor/js/angular-route.js",

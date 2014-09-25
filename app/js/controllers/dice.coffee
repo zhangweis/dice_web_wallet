@@ -27,14 +27,14 @@ angular.module("app").controller "DiceController", ($scope, $filter, $location, 
                         startBlock = 0
                     
                     Wallet.wallet_api.account_transaction_history("", "", 0, startBlock, -1).then (result) =>
-                        console.log(result.reverse())
-                        angular.forEach result.reverse(), (history)->
+                        transactions = (result.reverse())
+                        async.each result.reverse(), (history, cb)->
+                            
                             BlockchainAPI.rpc.request('blockchain_get_jackpot_transactions', [history.block_num+1]).then (response) ->
                                 jackpots = response.result
                                 angular.forEach jackpots, (jackpot)->
                                     if (jackpot.dice_transaction_id==history.trx_id)
-                                        console.log(history.trx_id)
-                                        console.log(jackpot)
+                                        history.jackpot = jackpot
                                 
                     
     $scope.enlargeBetSizeBy= (enlargeBy)->
