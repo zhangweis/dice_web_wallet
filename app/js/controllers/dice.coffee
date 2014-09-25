@@ -20,8 +20,20 @@ angular.module("app").controller "DiceController", ($scope, $filter, $location, 
         $scope.diceSmall =$scope.diceBig = ->
             Wallet.dice(account.name, $scope.amount, $scope.payouts).then (tx)->
                 console.log(tx);
-                @wallet_api.account_transaction_history("", "", 0, Wallet.transactions_last_block, -1).then (result) =>
-                    console.log(result)                    
+                BlockchainAPI.get_block_count().then (blockCount) ->
+                    console.log(blockCount);
+                    startBlock = blockCount-30*24*60*60/5;
+                    if (startBlock<0)
+                        startBlock = 0
+                    
+                    Wallet.wallet_api.account_transaction_history("", "", 0, startBlock, -1).then (result) =>
+                        console.log(result.reverse())
+                        angular.forEach result.reverse(), (history)->
+                            Wallet.rpc.request('get_transaction', [history.trx_id]).then (response) ->
+                                tx = response.result
+                                console.log(history.trx_id)
+                                console.log(tx)
+                                
                     
     $scope.enlargeBetSizeBy= (enlargeBy)->
         $scope.amount*=enlargeBy;
