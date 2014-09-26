@@ -44,7 +44,8 @@ angular.module("app").controller "DiceController", ($scope, $filter, $location, 
         $scope.diceSmall =$scope.diceBig = ->
             Wallet.dice(account.name, $scope.amount, $scope.payouts).then (tx)->
                 console.log(tx);
-                $scope.reloadDices()                
+                $scope.transactions.splice(0,0,{transaction:tx, transaction_id_prev:'????', jackpot:{play_amount:$scope.amount,payouts:$scope.payouts}});
+                setTimeout($scope.reloadDices, 10000)
 
     $scope.enlargeBetSizeBy= (enlargeBy)->
         $scope.amount*=enlargeBy;

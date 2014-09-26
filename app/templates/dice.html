@@ -115,18 +115,22 @@
 <div class="results_container">
     <div class="results_header"><div class="result"><div class="who">who</div><div class="when">when</div><div class="betid">betid</div><div class="lucky">lucky</div><div class="chance">target</div><div class="bet">bet</div><div class="payout">payout</div><div class="profit">profit</div></div></div>
     <div id="all" class="results">
+<!--
         <div class="result lose imp "><div class="skinny">&nbsp;user: </div><div class="who">august85 (804639)</div><div class="skinny">&nbsp;date: </div><div class="when">2014-06-24 02:21:17</div><div class="skinny">&nbsp;betid: </div><div class="betid"><a class="" href="/roll/1269212580">1269212580</a></div><div class="skinny">&nbsp;lucky: </div><div class="lucky"><span class="s1">32.</span><span class="s2">25</span><span class="s3">88</span></div><div class="skinny">&nbsp;target: </div><div class="chance">&lt;<span class="s1">06.</span><span class="s2">00</span><span class="s3">00</span></div><div class="skinny">&nbsp;bet: </div><div class="bet">0.00000007</div><div class="skinny">&nbsp;payout: </div><div class="payout">16.5x</div><div class="skinny">&nbsp;profit: </div><div class="profit"><span class="s1">-0.00000007</span></div></div>
         <div class="result win "><div class="skinny">&nbsp;user: </div><div class="who">bud (741263)</div><div class="skinny">&nbsp;date: </div><div class="when">2014-06-24 02:21:17</div><div class="skinny">&nbsp;betid: </div><div class="betid"><a class="" href="/roll/1269212579">1269212579</a></div><div class="skinny">&nbsp;lucky: </div><div class="lucky"><span class="s1">61.</span><span class="s2">08</span><span class="s3">60</span></div><div class="skinny">&nbsp;target: </div><div class="chance">&gt;<span class="s1">50.</span><span class="s2">49</span><span class="s3">99</span></div><div class="skinny">&nbsp;bet: </div><div class="bet">0.00000001</div><div class="skinny">&nbsp;payout: </div><div class="payout">2x</div><div class="skinny">&nbsp;profit: </div><div class="profit"><span class="s1">+0.00000001</span></div></div>
         <div class="result lose "><div class="skinny">&nbsp;user: </div><div class="who">MasterGarnmile (533921)</div><div class="skinny">&nbsp;date: </div><div class="when">2014-06-24 02:21:17</div><div class="skinny">&nbsp;betid: </div><div class="betid"><a class="" href="/roll/1269212578">1269212578</a></div><div class="skinny">&nbsp;lucky: </div><div class="lucky"><span class="s1">19.</span><span class="s2">85</span><span class="s3">74</span></div><div class="skinny">&nbsp;target: </div><div class="chance">&gt;<span class="s1">50.</span><span class="s2">49</span><span class="s3">99</span></div><div class="skinny">&nbsp;bet: </div><div class="bet">0.00000001</div><div class="skinny">&nbsp;payout: </div><div class="payout">2x</div><div class="skinny">&nbsp;profit: </div><div class="profit"><span class="s1">-0.00000001</span></div></div>
-        <div class="result win " ng-repeat="tx in transactions">
-            <div class="skinny">&nbsp;user: </div><div class="who">bud (741263)</div>
-            <div class="skinny">&nbsp;date: </div><div class="when" ng-bind='tx.transaction.received_time'>2014-06-24 02:21:17</div>
-            <div class="skinny">&nbsp;betid: </div><div class="betid" ng-bind='tx.transaction_id_prev'><a class="" href="/roll/1269212579">1269212579</a></div>
-            <div class="skinny">&nbsp;lucky: </div><div class="lucky" ng-bind='tx.jackpot.lucky_number'><span class="s1">61.</span><span class="s2">08</span><span class="s3">60</span></div>
-            <div class="skinny">&nbsp;target: </div><div class="chance">&gt;<span class="s1">50.</span><span class="s2">49</span><span class="s3">99</span></div>
-            <div class="skinny">&nbsp;bet: </div><div class="bet" ng-bind='tx.jackpot.play_amount'>0.00000001</div>
-            <div class="skinny">&nbsp;payout: </div><div class="payout"><span ng-bind='tx.jackpot.payouts'>2</span>x</div>
-            <div class="skinny">&nbsp;profit: </div><div class="profit"><span class="s1" ng-bind='tx.jackpot.jackpot_received-tx.jackpot.play_amount'>+0.00000001</span></div>
+-->
+        <div ng-repeat="tx in transactions">
+            <div class="result" ng-class="{win:tx.has_jackpot&&tx.jackpot.jackpot_received>0,lose:tx.has_jackpot&&tx.jackpot.jackpot_received<=0}">
+                <div class="skinny">&nbsp;user: </div><div class="who">bud (741263)</div>
+                <div class="skinny">&nbsp;date: </div><div class="when" ng-bind='tx.transaction.received_time'>2014-06-24 02:21:17</div>
+                <div class="skinny">&nbsp;betid: </div><div class="betid" ng-bind='tx.transaction_id_prev'><a class="" href="/roll/1269212579">1269212579</a></div>
+                <div class="skinny">&nbsp;lucky: </div><div class="lucky" ng-bind='tx.jackpot.lucky_number'><div ng-if='tx.has_jackpot'><span class="s1">61.</span><span class="s2">08</span><span class="s3">60</span></div></div><div class="lucky" ng-if='!tx.has_jackpot'>in progress</div>
+                <div class="skinny">&nbsp;target: </div><div class="chance">&lt;<span class="s1">49.</span><span class="s2">50</span><span class="s3">00</span></div>
+                <div class="skinny">&nbsp;bet: </div><div class="bet" ng-bind='tx.jackpot.play_amount'>0.00000001</div>
+                <div class="skinny">&nbsp;payout: </div><div class="payout"><span ng-bind='tx.jackpot.payouts'>2</span>x</div>
+                <div class="skinny">&nbsp;profit: </div><div class="profit"><span class="s1" ng-bind='tx.jackpot.jackpot_received-tx.jackpot.play_amount' ng-if='tx.has_jackpot'>+0.00000001</span></div><div class="profit" ng-if='!tx.has_jackpot'>in progress</div>
+            </div>
         </div>
     </div>
 </div>

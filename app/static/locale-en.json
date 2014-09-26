@@ -4,7 +4,7 @@
         "index":"Dice",
         "roll":{
             "high":"Roll Hi",
-            low:"Roll Lo"
+            "low":"Roll Lo"
         }
     },
     "btn":{
