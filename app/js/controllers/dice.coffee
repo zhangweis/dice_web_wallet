@@ -11,7 +11,7 @@ angular.module("app").controller "DiceController", ($scope, $filter, $location, 
             greaterThan : 100-$scope.chancePercent
         }
         $scope.calculateProfit()
-        
+    $scope.precision = 1000000
     $scope.reloadDices = ->
         BlockchainAPI.get_block_count().then (blockCount) ->
             console.log(blockCount);
@@ -19,32 +19,31 @@ angular.module("app").controller "DiceController", ($scope, $filter, $location, 
             if (startBlock<0)
                 startBlock = 0
             
-            Wallet.wallet_api.account_transaction_history("", "", 0, startBlock, -1).then (result) =>
-                transactions = (result.reverse())
-                $scope.transactions = []
-                async.each transactions, (history, cb)->
-                    console.log(history)
-                    if (history.is_virtual||histroy.ledger_entries.length==0||histroy.ledger_entries[0].memo!='play dice')
-                        return cb()
-                        
-                    $scope.transactions.push(history)
-                    BlockchainAPI.rpc.request('blockchain_get_jackpot_transactions', [history.block_num+1]).then (response) ->
-                        jackpots = response.result
-                        angular.forEach jackpots, (jackpot)->
-                            if (jackpot.dice_transaction_id==history.trx_id)
-                                history.jackpot = jackpot
-                        cb()
-                
+            Wallet.rpc.request('wallet_account_dice_transaction_history', ["", "", 0, startBlock, -1]).then (result) =>
+                transactions = (result.result.reverse())
+                $scope.transactions = transactions
+                angular.forEach transactions, (tx) ->
+                    tx.transaction_id_prev = tx.transaction.record_id.substring(0, 8)
+                    if (!tx.has_jackpot)
+                        tx.jackpot.play_amount = tx.dice.amount;
+                        tx.jackpot.payouts = tx.dice.payouts;
+                    else
+                        tx.jackpot.lucky_number/= 10
+                    tx.jackpot.play_amount /= $scope.precision;
+                    console.log(tx);
+
         
     $scope.calculateFromProfit=->
         $scope.amount = $scope.profit / ($scope.payouts-1)
     Wallet.get_current_or_first_account().then (account)->
         $scope.balance = Wallet.balances[account.name]['JDST']
+        $scope.precision = $scope.balance.precision;
         $scope.balance = $scope.balance.amount / $scope.balance.precision
         $scope.diceSmall =$scope.diceBig = ->
             Wallet.dice(account.name, $scope.amount, $scope.payouts).then (tx)->
                 console.log(tx);
                 $scope.reloadDices()                
+    $scope.reloadDices()
                     
     $scope.enlargeBetSizeBy= (enlargeBy)->
         $scope.amount*=enlargeBy;
