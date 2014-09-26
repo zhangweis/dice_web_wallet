@@ -11,7 +11,7 @@ angular.module("app").controller "DiceController", ($scope, $filter, $location, 
             greaterThan : 100-$scope.chancePercent
         }
         $scope.calculateProfit()
-    $scope.precision = 1000000
+    $scope.precision = 100000
     $scope.reloadDices = ->
         BlockchainAPI.get_block_count().then (blockCount) ->
             console.log(blockCount);
