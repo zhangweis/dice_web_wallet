@@ -40,12 +40,12 @@ angular.module("app").controller "DiceController", ($scope, $filter, $location, 
         $scope.balance = Wallet.balances[account.name]['JDST']
         $scope.precision = $scope.balance.precision;
         $scope.balance = $scope.balance.amount / $scope.balance.precision
+        $scope.reloadDices()
         $scope.diceSmall =$scope.diceBig = ->
             Wallet.dice(account.name, $scope.amount, $scope.payouts).then (tx)->
                 console.log(tx);
                 $scope.reloadDices()                
-    $scope.reloadDices()
-                    
+
     $scope.enlargeBetSizeBy= (enlargeBy)->
         $scope.amount*=enlargeBy;
         $scope.calculateProfit()
