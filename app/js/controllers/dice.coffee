@@ -52,7 +52,7 @@ angular.module("app").controller "DiceController", ($scope, $filter, $location, 
                         if (!tx.has_jackpot)
                             in_progress = true
                     if (in_progress)
-                        setTimeout($scope.reloadDices, 1000)
+                        setTimeout($scope.reloadDices, 2000)
 
         
     $scope.calculateFromProfit=->
