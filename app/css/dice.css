@@ -1,7 +1,7 @@
 fieldset p{display:inline-block;padding:5px;margin:5px 0px;}
 
 .result.me{background:#d0d0d0;}.result .zero{color:#888;}.result.me .zero{color:#909090;}.result.win .lucky,.result.win .profit{color:#080;font-weight:bold;}.result.lose.imp .lucky{color:#444;font-weight:bold;}.result.win.gold .lucky{color:#960;font-weight:bold;}.result.lose .lucky,.result.lose .profit{color:rgb(189,29,29);font-weight:bold;}.bet,.chance{width:90px;}.betid{width:85px;}.betid a{font-size:70%;text-decoration:none;font-weight:normal;}.lucky{width:75px;}.who{width:140px;}.when,.compare,.profit,.payout{width:150px;}.results .when{font-size:80%;}.results_header .profit,.results_header .bet{text-align:center;}.bet,.profit{display:inline-block;padding:0px;text-align:right;}.when,.who,.betid,.chance,.lucky,.compare,.payout{display:inline-block;padding:0px;text-align:center;}
-.skinny{width:1px;overflow:hidden;display:inline-block;}
+.skinny{width:0px;overflow:hidden;display:inline-block;}
 fieldset {display:inline-block; padding:2em;font-size:120%;}
 
 .big{padding:0;font-size:125%;display:inline-block;}.big button{border:5px solid green;border-radius:12px;}.big .button_group button{height:77px;min-width:75px;}.big .button_inner_group .key{font-size:61.538%;}.balance{padding-top:5px;padding-left:5px;}.bal_text{padding:0;text-align:left;}.big input{margin:0;font-size:120%;border:3px solid #888;background:#ccc;font-weight:bold;color:#484;width:190px;border-radius:12px;}
