@@ -358,8 +358,8 @@ class Wallet
         @rpc.request('blockchain_get_block', [block_num]).then (response) ->
           response.result
 
-    dice: (account_name, amount, payouts)->
-        @rpc.request('wallet_dice', [account_name, amount, payouts]).then (response) ->
+    dice: (account_name, amount, payouts, roll_high)->
+        @rpc.request('wallet_dice', [account_name, amount, payouts, roll_high]).then (response) ->
             response.result
 
     wallet_lock: ->
