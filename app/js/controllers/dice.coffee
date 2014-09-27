@@ -33,7 +33,7 @@ angular.module("app").controller "DiceController", ($scope, $filter, $location, 
                     $scope.balance = $scope.balance.amount / $scope.balance.precision
                 transactions = (result.result.reverse())
                 $scope.transactions = transactions
-                angular.forEach transactions, (tx) ->
+                async.each transactions, (tx, cb) ->
                     tx.transaction_id_prev = tx.transaction.record_id.substring(0, 8)
                     if (!tx.has_jackpot)
                         tx.jackpot.play_amount = tx.dice.amount;
@@ -44,7 +44,15 @@ angular.module("app").controller "DiceController", ($scope, $filter, $location, 
                         tx.jackpot.jackpot_received/= $scope.precision
                     tx.jackpot.play_amount /= $scope.precision;
                     computeCondition(tx)
+                    cb()
                     console.log(tx);
+                , ->
+                    in_progress = false
+                    angular.forEach $scope.transactions, (tx) ->
+                        if (!tx.has_jackpot)
+                            in_progress = true
+                    if (in_progress)
+                        setTimeout($scope.reloadDices, 1000)
 
         
     $scope.calculateFromProfit=->
@@ -61,7 +69,7 @@ angular.module("app").controller "DiceController", ($scope, $filter, $location, 
                 computeCondition(transaction)
                 
                 $scope.transactions.splice(0,0,transaction);
-                setTimeout($scope.reloadDices, 10000)
+                setTimeout($scope.reloadDices, 5000)
         $scope.diceSmall = ->
             dice(false)
         $scope.diceBig = ->
