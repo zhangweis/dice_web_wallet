@@ -16,7 +16,9 @@ angular.module("app").controller "DiceController", ($scope, $filter, $location, 
         tx.jackpot.condition={};
         tx.jackpot.condition.hi_lo = if (tx.jackpot.roll_high)then'>'else'<';
         tx.jackpot.condition.threshould = (100-1)/tx.jackpot.payouts;
-
+        if (tx.jackpot.roll_high)
+            tx.jackpot.condition.threshould = 100 - tx.jackpot.condition.threshould
+        
     $scope.reloadDices = ->
         BlockchainAPI.get_block_count().then (blockCount) ->
             console.log(blockCount);
