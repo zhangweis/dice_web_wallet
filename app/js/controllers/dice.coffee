@@ -58,12 +58,13 @@ angular.module("app").controller "DiceController", ($scope, $filter, $location, 
     $scope.calculateFromProfit=->
         $scope.amount = $scope.profit / ($scope.payouts-1)
     Wallet.get_current_or_first_account().then (account)->
+        $scope.accountName = account.name
         $scope.balance = Wallet.balances[account.name]['JDST']
         $scope.precision = $scope.balance.precision;
         $scope.balance = $scope.balance.amount / $scope.balance.precision
         $scope.reloadDices()
         dice = (roll_high)->
-            Wallet.dice(account.name, $scope.amount, $scope.payouts, roll_high).then (tx)->
+            Wallet.dice($scope.accountName, $scope.amount, $scope.payouts, roll_high).then (tx)->
                 console.log(tx);
                 transaction = {transaction:tx, transaction_id_prev:'????', jackpot:{play_amount:$scope.amount,payouts:$scope.payouts,roll_high:roll_high}}
                 computeCondition(transaction)
