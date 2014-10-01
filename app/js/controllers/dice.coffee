@@ -40,7 +40,7 @@ angular.module("app").controller "DiceController", ($scope, $filter, $location, 
                         tx.jackpot.payouts = tx.dice.payouts;
                         tx.jackpot.roll_high = tx.dice.roll_high;
                     else
-                        tx.jackpot.lucky_number/= 10
+                        tx.jackpot.lucky_number/= tx.precision
                         tx.jackpot.jackpot_received/= $scope.precision
                     tx.jackpot.play_amount /= $scope.precision;
                     computeCondition(tx)
