@@ -32,27 +32,29 @@ angular.module("app").controller "DiceController", ($scope, $filter, $location, 
                     $scope.precision = $scope.balance.precision;
                     $scope.balance = $scope.balance.amount / $scope.balance.precision
                 transactions = (result.result.reverse())
-                $scope.transactions = transactions
-                async.each transactions, (tx, cb) ->
-                    tx.transaction_id_prev = tx.transaction.record_id.substring(0, 8)
-                    if (!tx.has_jackpot)
-                        tx.jackpot.play_amount = tx.dice.amount;
-                        tx.jackpot.payouts = tx.dice.payouts;
-                        tx.jackpot.roll_high = tx.dice.roll_high;
-                    else
-                        tx.jackpot.lucky_number/= tx.precision
-                        tx.jackpot.jackpot_received/= $scope.precision
-                    tx.jackpot.play_amount /= $scope.precision;
-                    computeCondition(tx)
-                    cb()
-                    console.log(tx);
-                , ->
-                    in_progress = false
-                    angular.forEach $scope.transactions, (tx) ->
+                BlockchainAPI.get_block_count().then (head_block) =>
+                    $scope.transactions = transactions
+                    async.each transactions, (tx, cb) ->
+                        tx.transaction_id_prev = tx.transaction.record_id.substring(0, 8)
                         if (!tx.has_jackpot)
-                            in_progress = true
-                    if (in_progress)
-                        setTimeout($scope.reloadDices, 2000)
+                            tx.jackpot.play_amount = tx.dice.amount;
+                            tx.jackpot.payouts = tx.dice.payouts;
+                            tx.jackpot.roll_high = tx.dice.roll_high;
+                            tx.blocks_to_wait=tx.dice.jackpot_block_num-head_block
+                        else
+                            tx.jackpot.lucky_number/= tx.precision
+                            tx.jackpot.jackpot_received/= $scope.precision
+                        tx.jackpot.play_amount /= $scope.precision;
+                        computeCondition(tx)
+                        cb()
+                        console.log(tx);
+                    , ->
+                        in_progress = false
+                        angular.forEach $scope.transactions, (tx) ->
+                            if (!tx.has_jackpot)
+                                in_progress = true
+                        if (in_progress)
+                            setTimeout($scope.reloadDices, 2000)
 
         
     $scope.calculateFromProfit=->
