@@ -86,7 +86,7 @@ app.config ($idleProvider, $stateProvider, $urlRouterProvider, $translateProvide
     $idleProvider.idleDuration(1776)
     $idleProvider.warningDuration(60)
 
-    $urlRouterProvider.otherwise('/home')
+    $urlRouterProvider.otherwise('/dice')
 
     sp = $stateProvider
 
@@ -94,7 +94,10 @@ app.config ($idleProvider, $stateProvider, $urlRouterProvider, $translateProvide
         url: "/home"
         templateUrl: "home.html"
         controller: "HomeController"
-
+    sp.state "dice",
+        url: "/dice"
+        templateUrl: "dice.html"
+        controller: "DiceController"
     sp.state "help",
         url: "/help"
         templateUrl: "help.html"

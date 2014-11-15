@@ -72,9 +72,9 @@ class Wallet
             angular.forEach results.account_balances, (name_bal_pair) =>
                 name = name_bal_pair[0]
                 balances = name_bal_pair[1]
-                angular.forEach balances, (asset_id_amt_pair) =>
+                angular.forEach balances[0], (asset_id_amt_pair) =>
                     asset_id = asset_id_amt_pair[0]
-                    asset_record = @blockchain.asset_records[asset_id]
+                    asset_record = @blockchain.asset_records[0]
                     symbol = asset_record.symbol
                     amount = asset_id_amt_pair[1]
                     @balances[name] = @balances[name] || {}
@@ -82,9 +82,9 @@ class Wallet
                     @asset_balances[asset_id] = @asset_balances[asset_id] || 0
                     @asset_balances[asset_id] = @asset_balances[asset_id] + amount
             angular.forEach @accounts, (acct) =>
-                if acct.is_my_account
+#                if acct.is_my_account
                     #@refresh_open_order_balances(acct.name)
-                    @refresh_bonuses(acct.name)
+                    #@refresh_bonuses(acct.name)
                 if acct.is_my_account and !@balances[acct.name]
                     @balances[acct.name] = {}
                     @balances[acct.name][@main_asset.symbol] = @utils.asset(0, @main_asset)
@@ -381,6 +381,10 @@ class Wallet
     get_block: (block_num)->
         @rpc.request('blockchain_get_block', [block_num]).then (response) ->
           response.result
+
+    dice: (account_name, amount, payouts, roll_high)->
+        @rpc.request('wallet_dice', [account_name, amount, payouts, roll_high]).then (response) ->
+            response.result
 
     wallet_lock: ->
         @rpc.request('wallet_lock').then (response) ->
