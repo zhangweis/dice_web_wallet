@@ -1,4 +1,4 @@
-angular.module("app").controller "UpdateRegAccountController", ($scope, $stateParams, $modal, Wallet, Shared, RpcService, Blockchain, Info, Utils, md5, WalletAPI, Growl) ->
+angular.module("app").controller "UpdateRegAccountController", ($scope, $stateParams, $modal, Wallet, Shared, RpcService, Blockchain, Info, Utils, WalletAPI, Growl) ->
     name = $stateParams.name
 
     $scope.$watch ->
@@ -52,16 +52,16 @@ angular.module("app").controller "UpdateRegAccountController", ($scope, $statePa
             # TODO: check that the payrate can not be decreased
             delegate_pay_rate_info = ", update account to a delegate costs extra " + $scope.delegate_reg_fee
 
-        if $scope.edit.newemail
-            gravatarMD5 = md5.createHash($scope.edit.newemail)
-        else
-            gravatarMD5 = ""
+#        if $scope.edit.newemail
+#            gravatarMD5 = md5.createHash($scope.edit.newemail)
+#        else
+#            gravatarMD5 = ""
+#
+#        if gravatarMD5
+#            public_info_tip = ", the gravatar md5 \"" + gravatarMD5 + "\" hash of your email will be publish to everyone."
 
         public_info_tip = ""
 
-        if gravatarMD5
-            public_info_tip = ", the gravatar md5 \"" + gravatarMD5 + "\" hash of your email will be publish to everyone."
-            
         $modal.open
             templateUrl: "dialog-confirmation.html"
             controller: "DialogConfirmationController"
@@ -74,8 +74,7 @@ angular.module("app").controller "UpdateRegAccountController", ($scope, $statePa
                             console.log('submitted', name,{'gui_data':{'email':$scope.edit.newemail,'website':$scope.edit.newwebsite},'gui_custom_data_pairs':$scope.edit.pairs})
 
                             payrate = if $scope.m.delegate then $scope.m.payrate else 255
-                            console.log($scope.account.name, $scope.m.payfrom[0], {'gravatarID': gravatarMD5}, payrate)
-                            WalletAPI.account_update_registration($scope.account.name, $scope.m.payfrom[0], {'gravatarID': gravatarMD5}, payrate).then (response) ->
+                            WalletAPI.account_update_registration($scope.account.name, $scope.m.payfrom[0], {}, payrate).then (response) ->
                                 Wallet.refresh_transactions_on_update()
                                 Growl.notice "", "Account update transaction broadcasted"
 

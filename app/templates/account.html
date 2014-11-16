@@ -131,7 +131,7 @@
       <table class="table table-striped table-acc-balance" ng-show="account.is_my_account">
         <thead>
           <tr>
-            <th><h3 class="header-title text-muted" translate>ESTIMATED YIELD</h3></th>
+            <th><h3 class="header-title text-muted" translate>account.estimated_yield</h3></th>
           </tr>
         </thead>
         <tbody>
@@ -188,7 +188,7 @@
             <form name="import_key_form" class="form-horizontal" role="form" ng-submit="import_key()">
               <div class="form-group row" ng-class="{ 'has-error' : import_key_form.key.$invalid && !import_key_form.key.$pristine }">
                 <label for="pk_value" class="col-sm-2 control-label">
-                    <a class="btn btn-link" onclick="magic_unicorn.open_in_external_browser('https://en.bitcoin.it/wiki/Wallet_import_format')">WIF <span translate>account.priv_key </span></a>
+                    WIF <span translate>account.priv_key</span>
                 </label>
                 <div class="col-sm-9">
                   <input name="key" ng-model="private_key.value" type="text" class="form-control" id="pk_value"

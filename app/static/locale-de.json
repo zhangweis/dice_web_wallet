@@ -26,8 +26,8 @@
         "reg_to_create_asset": "You must be a registered account to create and issue assets.&nbsp;Please register your account first.",
         "error_parsing_wif_key": "Error parsing WIF private key",
         "vote_will_transfer_balance_to_self": "The account will transfer its entire balance (minus transaction fee) to itself",
-        "canceling": "Canceling ...",
-        "pending": "Pending ...",
+        "canceling": "Canceling..",
+        "pending": "Pending..",
         "rename_account_name_existed": "Account with the name {{value}} is already registered on the blockchian.",
         "account_not_found": "Account not found",
         "wrong_amount": "Wrong Amount",
@@ -36,11 +36,12 @@
         "info_filter_by_op": "Filter transactions by operation",
         "info_no_trx": "There are no transactions in this block.",
         "info_trx_only": "Only show blocks with transactions",
-        "info_create_asset_fee": "Fees for creating a new asset",
         "info_privacy": "Your privacy is critically important to us.",
         "no_pending_trxs": "There are no pending transactions!",
         "no_trxs": "There are no transactions!",
-        "updating_trx_history": "Updating transaction history..."
+        "updating_trx_history": "Updating transaction history...",
+        "partial_voting_info": "This account is not voting with some of its stake. Consider updating your vote.",
+        "client_update_available": "There is a new mandatory client update available at bitshares-x.info"
     },
     "th": {
         "date": "DATUM",
@@ -99,7 +100,6 @@
         "trx_count": "Anzahl der Transaktionen",
         "blk_id": "Block ID",
         "prev_blk_id": "Vorige Block ID",
-        "block_fee_rate": "Block Gebühren Rate",
         "delegate_name": "Name des Delegierten",
         "delegate_pay_rate": "Auszahlungsrate des Delegierten",
         "timestamp": "Zeitstempel",
@@ -174,6 +174,7 @@
         "recent_markets": "Recent Markets",
         "median_price": "Median Price",
         "avg_price": "Avg. Price",
+        "feed_price": "Feed Price",
         "bid_depth": "Bid Depth",
         "ask_depth": "Ask Depth",
         "buy": "Buy",
@@ -205,7 +206,10 @@
             "bid_order": "Bid",
             "ask_order": "Ask",
             "short_order": "Short",
-            "cover_order": "Cover"
+            "cover_order": "Cover",
+            "margin_order": "Open Margin",
+            "collateral_ratio": "Collateral Ratio",
+            "price_limit": "Price Limit"
         },
         "tip": {
             "insufficient_balances": "Insufficient balances",
@@ -213,11 +217,35 @@
             "ask_price_too_low": "Your ask price is {{value}}% lower than the highest bid.",
             "short_price_too_low": "Your short price is {{value}}% lower than the highest bid.",
             "short_price_should_above_min_range": "Short price should be above min range price",
-            "short_price_should_below_max_range": "Short price should be below max range price"
+            "short_price_should_below_max_range": "Short price should be below max range price",
+            "confirm_order": "Please confirm your order. The order will be funded via {{value}} account."
         },
         "chart": {
             "price": "Price",
             "volume": "Volume"
+        },
+        "advanced": "Short Mode",
+        "open_buy_orders": "Open Buy {{value}} Orders",
+        "open_sell_orders": "Open Sell {{value}} Orders",
+        "open_short_orders": "Open Short Sell {{value}} Orders",
+        "open_margin_orders": "Open Margin Orders",
+        "collateral_ratio": "Collateral Ratio",
+        "price_limit": "Price Limit",
+        "help": {
+            "buy_quantity": "The amount of {{value}} that you would like to buy.",
+            "buy_price" : "The amount you are willing to pay in {{base}} per {{quantity}}.",
+            "buy_lowest_ask" : "The lowest price at which your buy order can be immediately matched.",
+            "buy_total" : "The number of {{base}} that will be withdrawn from {{account}} account to fund this order.",
+            "sell_quantity": "The amount of {{value}} that you would like to buy.",
+            "sell_price" : "The amount you are willing to get in {{base}} per {{quantity}}.",
+            "sell_highest_bid" : "The highest price at which your sell order can be immediately matched.",
+            "sell_total" : "The number of {{base}} that will be deposited to {{account}} account after sell order is executed.",
+            "short_quantity": "The number {{value}} that you would like to borrow and sell.",
+            "short_collateral_ratio": "The number of {{quantity}} per {{base}} that you are willing to post as collateral. Short orders are matched in order of highest collateral ratio.",
+            "short_price_limit_direct": "The highest price in {{base}} per {{quantity}} at which you are willing to borrow and sell {{base}}. Short orders only match at the price feed or price limit, whichever is more.",
+            "short_price_limit_inverted": "The lowest price in {{base}} per {{quantity}} at which you are willing to borrow and sell {{base}}. Short orders only match at the price feed or price limit, whichever is less.",
+            "short_feed_price": "The median exchange rate on external exchanges according to delegates.",
+            "short_total": "The amount {{value}} required to fund this order. Calculated as Quantity times Collateral Ratio."
         }
     },
     "account": {
@@ -275,8 +303,8 @@
         },
         "import_wif_key": "Import WIF Key",
         "import_from_wallet": "Import Keys from Wallet",
-        "update_pub_info": "Update public settings(on chain)}",
-        "update_local_info": "Update Private Infos(stored locally)",
+        "update_pub_info": "Update public settings (on chain)",
+        "update_local_info": "Update Private Infos (stored locally)",
         "pay_from": "Pay From",
         "update_need_fund": "You need fees for update your account, but you still do not have any funds yet",
         "delegate_settings": "Delegate Settings",
@@ -289,7 +317,8 @@
         "value": "Value",
         "rename_account": "Rename Account",
         "rename_account_locally": "Rename Account Locally",
-        "public_info": "Public Info"
+        "public_info": "Public Info",
+        "estimated_yield": "ESTIMATED YIELD"
     },
     "accounts": {
         "create_account": "Konto erstellen",
@@ -304,6 +333,7 @@
         "description": "Description",
         "memo_data": "Memo Data",
         "maximum_share_supply": "Maximum Share Supply",
+        "info_create_asset_fee": "Fees for creating a new asset",
         "precision": "Precision",
         "issued_by": "Issued By",
         "create_new_asset": "Create A New Asset",
@@ -339,10 +369,11 @@
     },
     "pref": {
         "title": "Preferences",
-        "logout_timeout": "Logout timeout, seconds",
-        "trx_fee": "Transaction Fee ({{symbol}})",
-        "autocomplete_receiver": "Autocomplete Receiver",
-        "autocomplete_info": "In the transfer form autocomplete the name of the receiver, as the user types"
+        "logout_timeout": "Logout timeout",
+        "trx_fee": "Transaction Fee",
+        "autocomplete_receiver": "Autocomplete Receiver Name",
+        "autocomplete_info": "In the transfer form autocomplete the name of the receiver, as the user types",
+        "language": "Interface Language"
     },
     "console": {
         "type_cmd_and_enter": "Type a command and hit Enter"
@@ -372,5 +403,10 @@
         "severe_network_issue": "Severe Network Problems",
         "low_participation_rate_60": "is displayed when delegate participation rate drops below 60%.  Low delegate participation makes blockchain forks likely.",
         "about": "About"
+    },
+    "footer": {
+        "enable_trx_scan": "Enable Transaction Scanning",
+        "up_to_date": "Up to date, processed {{value}} blocks",
+        "catching_up": "Catching up.. processed {{value1}} out of {{value2}}"
     }
 }

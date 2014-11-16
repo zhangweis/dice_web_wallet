@@ -48,38 +48,37 @@ angular.module("app.directives").directive "inputName", ->
             $scope.ngModel = $scope.ngModel.replace(/\-+$/, "") if $scope.ngModel
             $scope.ngModel = $scope.ngModel.replace(/\.+$/, "") if $scope.ngModel
 
-angular.module("app.directives").directive "inputPositiveNumber", ->
+angular.module("app.directives").directive "inputPositiveNumber", ($compile, $tooltip) ->
     template: '''
-        <input class="form-control" placeholder="0.0" />
+        <input class="form-control" placeholder="0.0 {{required ? '' : '(optional)'}}" />
     '''
     restrict: "E"
     replace: true
     require: "ngModel"
 
-    link: (scope, elm, attrs, ctrl) ->
+    scope:
+        required: "="
+
+    link: (scope, element, attrs, ctrl) ->
+#        console.log "------ $tooltip ------>", $tooltip
+#        element.after('''<i class="fa fa-question-circle"></i>''')
+#        element.parent().addClass("right-inner-addon")
+#        $compile(element.contents())(scope)
 
         validator = (viewValue) ->
-            #console.log "------ inputPositiveNumber viewValue 0 ------>", viewValue
             res = null
+            if viewValue == "" and not scope.required
+                ctrl.$setValidity "float", true
+                return 0
+
             if /^[\d\.\,\+]+$/.test(viewValue)
-                #console.log "------ inputPositiveNumber viewValue 1 ------>", viewValue
                 ctrl.$setValidity "float", true
                 if $.isNumeric(viewValue)
                     res = parseFloat viewValue
                 else
-                    res = parseFloat viewValue.replace(",", "")
-                    #console.log "------ inputPositiveNumber viewValue 1b ------>", viewValue, res
+                    res = parseFloat viewValue.replace(/,/g, "")
             else
-                #console.log "------ inputPositiveNumber viewValue 2 ------>", viewValue
                 ctrl.$setValidity "float", false
             return res
 
         ctrl.$parsers.unshift validator
-
-        scope.$watch attrs.ngModel, (newValue) ->
-            #console.log "------ $watch ------>", newValue
-            return unless newValue
-            res = validator(newValue)
-            #console.log "------ $setViewValue ------>", newValue, res
-            ctrl.$setViewValue(newValue)
-            scope.$eval(attrs.ngModel + "=" + res)

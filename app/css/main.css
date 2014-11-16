@@ -66,6 +66,14 @@ body {
 	color: #aaa;
 }
 
+.table a {
+  text-decoration: none;
+}
+
+.fa-2x {
+	font-size: 1.6em;
+}
+
 .white, a.white {
 	color: #fff;
 }
@@ -88,6 +96,10 @@ input[type=number]::-webkit-inner-spin-button,
 input[type=number]::-webkit-outer-spin-button { 
   -webkit-appearance: none; 
   margin: 0; 
+}
+
+.input-group-btn {
+	font-size: 100%;
 }
 
 a.white:hover {
@@ -348,7 +360,7 @@ li.stat {
 }
 
 input.ng-dirty.ng-invalid {
-	border: 1px solid #f00;
+	border: 1px solid #d97572;
 }
 
 .form-group span.text-muted {
@@ -387,6 +399,11 @@ input.ng-dirty.ng-invalid {
 	border-bottom: 1px dotted;
 }
 
+.clickable:hover {
+	/*text-decoration: underline;*/
+	border-bottom: 1px solid;
+}
+
 .trx-from-to {
 	font-size: 110%;
 }
@@ -418,4 +435,9 @@ input.ng-dirty.ng-invalid {
 	padding-bottom: 0;
 	color: #aaa;
 	border-bottom: 1px dotted #aaa;
+}
+
+.transfer-amount-error {
+	position: relative;
+	top: -14px;
 }

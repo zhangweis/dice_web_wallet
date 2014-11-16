@@ -6,8 +6,8 @@ angular.module("app").controller "RootController", ($scope, $location, $modal, $
     $scope.current_path_includes = (str)->
         $scope.currentPath.indexOf(str) >= 0
 
-    Wallet.check_wallet_status()
-    Info.watch_for_updates()
+    Wallet.check_wallet_status().then ->
+        Info.watch_for_updates()
 
     $scope.started = false
 
@@ -96,3 +96,6 @@ angular.module("app").controller "RootController", ($scope, $location, $modal, $
             control = form[key]
             control.$setPristine true
             control.clear_errors() if control && control.clear_errors
+
+    $scope.close_context_help = ->
+        $scope.context_help.open = false

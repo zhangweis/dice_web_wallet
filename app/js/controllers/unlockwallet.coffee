@@ -15,17 +15,28 @@ angular.module("app").controller "UnlockWalletController", ($scope, $rootScope, 
     $scope.wrongPass = false
     $scope.keydown = -> $scope.wrongPass = false
 
+    $scope.update_available = false
+
     cancel = $scope.$watch ->
       Info.info.client_version
     , ->
       if (Info.info.client_version)
         cancel()
         $scope.client_version = Info.info.client_version
+        #if $scope.client_version != "testnet"
+        #    $scope.update_available = true
+
 
     $scope.submitForm = ->
         $scope.wrongPass = false
         #deferred = $q.defer()
-        unlock_promise = Wallet.wallet_unlock($scope.spending_password)
+
+        error_handler = (response) ->
+            $scope.wrongPass = true
+            $scope.spending_password = ""
+            return true
+
+        unlock_promise = Wallet.wallet_unlock($scope.spending_password, error_handler)
         unlock_promise.then ->
             res = $scope.history_back()
             $location.path('/home') unless res
@@ -38,10 +49,5 @@ angular.module("app").controller "UnlockWalletController", ($scope, $rootScope, 
 #                    res = $scope.history_back()
 #                    $location.path('/home') unless res
 #                    deferred.resolve()
-
-        unlock_promise.catch ->
-            $scope.wrongPass = true
-            $scope.spending_password = ""
-            #deferred.reject()
 
         $rootScope.showLoadingIndicator unlock_promise
