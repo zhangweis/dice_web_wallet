@@ -14,6 +14,7 @@ module.exports = function(lineman) {
         "vendor/js/jquery.growl.js",
         //"vendor/js/bootstrap.js",
         //"vendor/js/jasny-bootstrap.js",
+	"vendor/js/stacktrace.js",
         "vendor/js/ark.js",
         "vendor/js/async.js",
         "vendor/js/angular.js",
